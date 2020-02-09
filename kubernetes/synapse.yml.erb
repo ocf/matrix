@@ -27,12 +27,15 @@ spec:
     spec:
       containers:
         - name: matrix-synapse
-          image: "matrixdotorg/synapse"
+          image: "docker.ocf.berkeley.edu/synapse:<%= version %>"
           ports:
             - containerPort: 8008
           volumeMounts:
             - mountPath: /data
               name: vol
+          env:
+          - name: "SYNAPSE_CONFIG_PATH"
+            value: "/etc/matrix/homeserver.yaml"
       volumes:
         - name: vol
           persistentVolumeClaim:
