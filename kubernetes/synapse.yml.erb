@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: matrix-service
+spec:
+  selector:
+    app: matrix
+  ports:
+    - port: 80
+      targetPort: 8008
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: matrix-deployment
+  labels:
+    app: matrix
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: matrix
+  template:
+    metadata:
+      labels:
+        app: matrix
+    spec:
+      containers:
+        - name: matrix-synapse
+          image: "matrixdotorg/synapse"
+          ports:
+            - containerPort: 8008
+          volumeMounts:
+            - mountPath: /data
+              name: vol
+      volumes:
+        - name: vol
+          persistentVolumeClaim:
+            claimName: matrix-vol
+        
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: virtual-host-ingress
+spec:
+  rules:
+    - host: matrix.ocf.berkeley.edu
+      http:
+        paths:
+          - backend:
+              serviceName: matrix-service
+              servicePort: 80
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: matrix-vol
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: managed-nfs-storage
+
