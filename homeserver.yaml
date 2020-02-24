@@ -7,7 +7,7 @@
 # e.g. matrix.org, localhost:8080, etc.
 # This is also the last part of your UserID.
 #
-server_name: "ocf.berkeley.edu"
+server_name: "matrix.ocf.berkeley.edu"
 
 # When running as a daemon, the file to store the pid in
 #
@@ -207,7 +207,6 @@ listeners:
   - port: 8008
     tls: false
     type: http
-    bind_addresses: ['127.0.0.1']
     x_forwarded: true
 
     resources:
