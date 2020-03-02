@@ -24,7 +24,7 @@ pid_file: /data/homeserver.pid
 # use synapse with a reverse proxy, this should be the URL to reach
 # synapse via the proxy.
 #
-#public_baseurl: https://example.com/
+public_baseurl: https://matrix.ocf.berkeley.edu/
 
 # Set the soft limit on the number of file descriptors synapse can use
 # Zero is used to indicate synapse should set the soft limit to the
@@ -232,7 +232,7 @@ listeners:
 
 # How to reach the server admin, used in ResourceLimitError
 #
-#admin_contact: 'mailto:admin@server.com'
+admin_contact: 'mailto:help@ocf.berkeley.edu'
 
 # Global blocking
 #
@@ -858,7 +858,7 @@ media_store_path: "/data/media_store"
 
 # Enable registration for new users.
 #
-#enable_registration: false
+enable_registration: true
 
 # Optional account validity configuration. This allows for accounts to be denied
 # any request after a given period.
@@ -1050,7 +1050,7 @@ account_threepid_delegates:
 
 # Enable collection and rendering of performance metrics
 #
-#enable_metrics: false
+enable_metrics: true
 
 # Enable sentry integration
 # NOTE: While attempts are made to ensure that the logs don't contain
@@ -1593,10 +1593,10 @@ email:
 # It can be defined in a human readable short form -- e.g. "1d", "1y".
 #
 #
-#stats:
-#   enabled: true
-#   bucket_size: 1d
-#   retention: 1y
+stats:
+   enabled: true
+   bucket_size: 1d
+   retention: 1y
 
 
 # Server Notices room configuration
