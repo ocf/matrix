@@ -1,0 +1,18 @@
+id: 7ead698a63c9378cf0ba8d28b610b7e1dbdbd0bc4a31d5a642339715856309f9
+hs_token: 1c98e59fc1131fb6e84c7906edee2bbc8deeed1f4a7474ce0871e1e2950b6561
+as_token: b87f533e0f273f5c62b56734a7d3ce01014345b394adba171f7953903c1fa794
+namespaces:
+  users:
+    - exclusive: true
+      regex: '@.*_irc:matrix\.ocf\.berkeley\.edu'
+  aliases: []
+  rooms:
+    - exclusive: false
+      regex: '!YAkpfBukqCvewVzbVb:matrix.ocf.berkeley.edu'
+    - exclusive: false
+      regex: '!zEhTjofIhaNlSpzxlN:matrix.ocf.berkeley.edu'
+url: 'http://bolide.ocf.berkeley.edu:9999'
+sender_localpart: ocfchan
+rate_limited: false
+protocols:
+  - irc

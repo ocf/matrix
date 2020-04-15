@@ -7,7 +7,7 @@
 # e.g. matrix.org, localhost:8080, etc.
 # This is also the last part of your UserID.
 #
-server_name: "ocf.berkeley.edu"
+server_name: "matrix.ocf.berkeley.edu"
 
 # When running as a daemon, the file to store the pid in
 #
@@ -1095,7 +1095,8 @@ report_stats: false
 
 # A list of application service config files to use
 #
-#app_service_config_files:
+app_service_config_files:
+   - /etc/matrix/irc-registration.yaml
 #  - app_service_1.yaml
 #  - app_service_2.yaml
 

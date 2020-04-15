@@ -25,7 +25,7 @@ homeserver:
 
   # The 'domain' part for user IDs on this home server. Usually (but not always)
   # is the "domain name" part of the HS URL.
-  domain: "ocf.berkeley.edu"
+  domain: "matrix.ocf.berkeley.edu"
 
   # Should presence be enabled for matrix clients on this bridge. If disabled on the
   # homeserver then it should also be disabled here to avoid excess traffic.
@@ -200,7 +200,7 @@ ircService:
         # $CHANNEL => The IRC channel (e.g. "#python")
         # This MUST have $CHANNEL somewhere in it.
         # Default: '#irc_$SERVER_$CHANNEL'
-        aliasTemplate: "#irc_$CHANNEL"
+        aliasTemplate: "#$CHANNEL"
         # A list of user IDs which the AS bot will send invites to in response
         # to a !join. Only applies if joinRule is 'invite'. Default: []
         # whitelist:
@@ -265,11 +265,13 @@ ircService:
         # 1:many mappings from IRC channels to room IDs on this IRC server.
         # The matrix room must already exist. Your matrix client should expose
         # the room ID in a "settings" page for the room.
-        "#thepub":
-          roomIds: ["!kieouiJuedJoxtVdaG:localhost"]
+        "#test-matrix":
+          roomIds: ["!YAkpfBukqCvewVzbVb:matrix.ocf.berkeley.edu"]
           # Channel key/password to use. Optional. If provided, matrix users do
           # not need to know the channel key in order to join the channel.
           # key: "secret"
+        "#matrix":
+          roomIds: ["!zEhTjofIhaNlSpzxlN:matrix.ocf.berkeley.edu"]
 
       # Configuration for virtual matrix users. The following variables are
       # exposed:
@@ -280,7 +282,7 @@ ircService:
         # MUST have $NICK somewhere in it.
         # Optional. Default: "@$SERVER_$NICK".
         # Example: "@irc.example.com_Alice:example.com"
-        userTemplate: "@irc_$NICK"
+        userTemplate: "@$NICK_irc"
         # The display name to use for created matrix clients. This should have
         # $NICK somewhere in it if it is specified. Can also use $SERVER to
         # insert the IRC domain.
@@ -301,7 +303,7 @@ ircService:
         # The template to apply to every IRC client nick. This MUST have either
         # $DISPLAY or $USERID or $LOCALPART somewhere in it.
         # Optional. Default: "M-$DISPLAY". Example: "M-Alice".
-        nickTemplate: "$DISPLAY[m]"
+        nickTemplate: "$DISPLAY-matrix"
         # True to allow virtual IRC clients to change their nick on this server
         # by issuing !nick <server> <nick> commands to the IRC AS bot.
         # This is completely freeform: it will NOT follow the nickTemplate.
@@ -498,9 +500,9 @@ sentry:
 # Use an external database to store bridge state.
 database:
   # database engine (must be 'postgres' or 'nedb'). Default: nedb
-  engine: "postgres"
+  engine: "nedb"
   # Either a PostgreSQL connection string, or a path to the NeDB storage directory.
   # For postgres, it must start with postgres://
   # For NeDB, it must start with nedb://. The path is relative to the project directory.
-  connectionString: "postgres://username:password@host:port/databasename"
+  connectionString: "nedb://storage.db"
 
