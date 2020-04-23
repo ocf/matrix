@@ -9,10 +9,7 @@ spec:
     - name: matrix-port
       port: 80
       targetPort: 8008
-    - name: bridge-port
-      port: 9995
-      targetPort: 9995
----
+--
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -41,21 +38,11 @@ spec:
           env:
           - name: "SYNAPSE_CONFIG_PATH"
             value: "/etc/matrix/homeserver.yaml"
-        - name: matrix-appservice-irc
-          image: "docker.ocf.berkeley.edu/matrix-appservice-irc:matrix-appservice-irc-testing-kmo"
-          ports:
-            - containerPort: 9995
-          volumeMounts:
-            - mountPath: /db
-              name: bridge-vol
-      volumes:
+     volumes:
         - name: vol
           persistentVolumeClaim:
             claimName: matrix-vol
-        - name: bridge-vol
-          persistentVolumeClaim:
-            claimName: matrix-bridge-vol
----
+--
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -73,18 +60,6 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: matrix-vol
-spec:
-  accessModes:
-  - ReadWriteMany
-  resources:
-    requests:
-      storage: 10Gi
-  storageClassName: managed-nfs-storage
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: matrix-bridge-vol
 spec:
   accessModes:
   - ReadWriteMany

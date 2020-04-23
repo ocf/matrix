@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: matrix-bridge-service
+spec:
+  selector:
+    app: matrix-bridge
+  ports:
+    - name: matrix-bridge-port
+      port: 9995
+      targetPort: 9995
+--
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: matrix-bridge-deployment
+  labels:
+    app: matrix-bridge
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: matrix-bridge
+  template:
+    metadata:
+      labels:
+        app: matrix-bridge
+    spec:
+      containers:
+       - name: matrix-appservice-irc
+          image: "docker.ocf.berkeley.edu/matrix-appservice-irc:matrix-testing-kmo"
+          ports:
+            - containerPort: 9995
+          volumeMounts:
+            - mountPath: /db
+              name: bridge-vol
+      volumes:
+       - name: bridge-vol
+          persistentVolumeClaim:
+            claimName: matrix-bridge-vol
+--
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: matrix-bridge-vol
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: managed-nfs-storage
