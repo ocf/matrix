@@ -9,7 +9,7 @@ spec:
     - name: matrix-port
       port: 80
       targetPort: 8008
---
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -36,13 +36,13 @@ spec:
             - mountPath: /data
               name: vol
           env:
-          - name: "SYNAPSE_CONFIG_PATH"
-            value: "/etc/matrix/homeserver.yaml"
-     volumes:
+            - name: "SYNAPSE_CONFIG_PATH"
+              value: "/etc/matrix/homeserver.yaml"
+      volumes:
         - name: vol
           persistentVolumeClaim:
             claimName: matrix-vol
---
+---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:

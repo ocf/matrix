@@ -9,7 +9,7 @@ spec:
     - name: matrix-bridge-port
       port: 9995
       targetPort: 9995
---
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -27,7 +27,7 @@ spec:
         app: matrix-bridge
     spec:
       containers:
-       - name: matrix-appservice-irc
+        - name: matrix-appservice-irc
           image: "docker.ocf.berkeley.edu/matrix-appservice-irc:matrix-testing-kmo"
           ports:
             - containerPort: 9995
@@ -35,10 +35,10 @@ spec:
             - mountPath: /db
               name: bridge-vol
       volumes:
-       - name: bridge-vol
+        - name: bridge-vol
           persistentVolumeClaim:
             claimName: matrix-bridge-vol
---
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
