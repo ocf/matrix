@@ -50,7 +50,7 @@ ircService:
       # E.g. 'ExampleNet IRC Bridge status'.
       # It is also used in the Third Party Lookup API as the instance `desc`
       # property, where each server is an instance.
-      name: "OCF Matrix"
+      name: "OCF"
 
       # additionalAddresses: [ "irc2.example.com" ]
       #
@@ -136,7 +136,7 @@ ircService:
         #      it can service bridge-specific queries from the IRC-side e.g. so
         #      real IRC clients have a way to change their Matrix display name.
         #      See https://github.com/matrix-org/matrix-appservice-irc/issues/55
-        enabled: true
+        enabled: false
         # The nickname to give the AS bot.
         nick: "matrix-bridge"
         # The password to give to NickServ or IRC Server for this nick. Optional.
@@ -181,12 +181,6 @@ ircService:
         # join_rules will be set to 'invite' until these modes are removed.
         # Default: "public".
         joinRule: public
-        # This will set the m.room.related_groups state event in newly created rooms
-        # with the given groupId. This means flares will show up on IRC users in those rooms.
-        # This should be set to the same thing as namespaces.users.group_id in irc_registration.
-        # This does not alter existing rooms.
-        # Leaving this option empty will not set the event.
-        groupId: +myircnetwork:localhost
         # Should created Matrix rooms be federated? If false, only users on the
         # HS attached to this AS will be able to interact with this room.
         # Default: true.
@@ -222,44 +216,30 @@ ircService:
         # can have a significant effect on performance on startup as the lists are
         # synced. This must be enabled for anything else in this section to take
         # effect. Default: false.
-        enabled: false
+        enabled: true
 
         # Syncing membership lists at startup can result in hundreds of members to
         # process all at once. This timer drip feeds membership entries at the
         # specified rate. Default: 10000. (10s)
-        floodDelayMs: 10000
+        floodDelayMs: 100
 
         global:
           ircToMatrix:
             # Get a snapshot of all real IRC users on a channel (via NAMES) and
             # join their virtual matrix clients to the room.
-            initial: false
+            initial: true
             # Make virtual matrix clients join and leave rooms as their real IRC
             # counterparts join/part channels. Default: false.
-            incremental: false
+            incremental: true
 
           matrixToIrc:
             # Get a snapshot of all real Matrix users in the room and join all of
             # them to the mapped IRC channel on startup. Default: false.
-            initial: false
+            initial: true
             # Make virtual IRC clients join and leave channels as their real Matrix
             # counterparts join/leave rooms. Make sure your 'maxClients' value is
             # high enough! Default: false.
-            incremental: false
-
-        # Apply specific rules to Matrix rooms. Only matrix-to-IRC takes effect.
-        rooms:
-          - room: "!fuasirouddJoxtwfge:localhost"
-            matrixToIrc:
-              initial: false
-              incremental: false
-
-        # Apply specific rules to IRC channels. Only IRC-to-matrix takes effect.
-        channels:
-          - channel: "#foo"
-            ircToMatrix:
-              initial: false
-              incremental: false
+            incremental: true
 
       mappings:
         # 1:many mappings from IRC channels to room IDs on this IRC server.
@@ -287,7 +267,7 @@ ircService:
         # $NICK somewhere in it if it is specified. Can also use $SERVER to
         # insert the IRC domain.
         # Optional. Default: "$NICK (IRC)". Example: "Alice (IRC)"
-        displayName: "$NICK (IRC)"
+        displayName: "$NICK"
         # Number of tries a client can attempt to join a room before the request
         # is discarded. You can also use -1 to never retry or 0 to never give up.
         # Optional. Default: -1
@@ -303,16 +283,16 @@ ircService:
         # The template to apply to every IRC client nick. This MUST have either
         # $DISPLAY or $USERID or $LOCALPART somewhere in it.
         # Optional. Default: "M-$DISPLAY". Example: "M-Alice".
-        nickTemplate: "$DISPLAY-matrix"
+        nickTemplate: "$LOCALPART-matrix"
         # True to allow virtual IRC clients to change their nick on this server
         # by issuing !nick <server> <nick> commands to the IRC AS bot.
         # This is completely freeform: it will NOT follow the nickTemplate.
-        allowNickChanges: false
+        allowNickChanges: true
         # The max number of IRC clients that will connect. If the limit is
         # reached, the client that spoke the longest time ago will be
         # disconnected and replaced.
         # Optional. Default: 30.
-        maxClients: 30
+        maxClients: 100
         # IPv6 configuration.
         ipv6:
           # Optional. Set to true to force IPv6 for outgoing connections.
@@ -329,8 +309,9 @@ ircService:
         # The maximum amount of time in seconds that the client can exist
         # without sending another message before being disconnected. Use 0 to
         # not apply an idle timeout. This value is ignored if this IRC server is
-        # mirroring matrix membership lists to IRC. Default: 172800 (48 hours)
-        idleTimeout: 10800
+        # mirroring matrix membership lists to IRC.
+        # idleTimeout is set to 3 weeks (1814400)
+        idleTimeout: 1814400
         # The number of millseconds to wait between consecutive reconnections if a
         # client gets disconnected. Setting to 0 will cause the scheduling to be
         # disabled, i.e. it will be scheduled immediately (with jitter.
@@ -364,8 +345,8 @@ ircService:
   # Set information about the bridged channel in the room state, so that client's may
   # present relevant UI to the user. MSC2346
   bridgeInfoState:
-    enabled: false
-    initial: false
+    enabled: true
+    initial: true
   # Configuration for an ident server. If you are running a public bridge it is
   # advised you setup an ident server so IRC mods can ban specific matrix users
   # rather than the application service itself.
