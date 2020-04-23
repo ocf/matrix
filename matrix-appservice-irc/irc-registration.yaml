@@ -13,7 +13,7 @@ namespaces:
       regex: '!YAkpfBukqCvewVzbVb:matrix.ocf.berkeley.edu'
     - exclusive: false
       regex: '!zEhTjofIhaNlSpzxlN:matrix.ocf.berkeley.edu'
-url: 'https://matrix.ocf.berkeley.edu:9995'
+url: 'http://localhost:9995'
 sender_localpart: matrix-bridge
 rate_limited: false
 protocols:
