@@ -1,0 +1,20 @@
+id: 8932b3435f0dbb697307801fbcaedad2da2d29fa71c30d70ef433a21c0585db6
+hs_token: 711663d558bd4be0d41976a89347e86b14f7addcb15b661b14101e1f83196a53
+as_token: d81e0ccf5435cca28ee0140ccef48cf935810f95836865dc7014353c15e4a0fa
+namespaces:
+  users:
+    - exclusive: true
+      regex: '@.*_irc:matrix\.ocf\.berkeley\.edu'
+  aliases:
+    - exclusive: true
+      regex: '#.*:matrix\.ocf\.berkeley\.edu'
+  rooms:
+    - exclusive: false
+      regex: '!YAkpfBukqCvewVzbVb:matrix.ocf.berkeley.edu'
+    - exclusive: false
+      regex: '!zEhTjofIhaNlSpzxlN:matrix.ocf.berkeley.edu'
+url: 'https://matrix.ocf.berkeley.edu:9999'
+sender_localpart: matrix-bridge
+rate_limited: false
+protocols:
+  - irc

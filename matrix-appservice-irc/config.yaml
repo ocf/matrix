@@ -34,7 +34,7 @@ homeserver:
 
   # Which port should the appservice bind to. Takes priority over the one provided in the
   # command line! Optional.
-  # bindPort: 9999
+  bindPort: 9995
 
   # Use this option to force the appservice to listen on another hostname for transactions.
   # This is NOT your synapse hostname. E.g. use 127.0.0.1 to only listen locally. Optional.
@@ -50,7 +50,7 @@ ircService:
       # E.g. 'ExampleNet IRC Bridge status'.
       # It is also used in the Third Party Lookup API as the instance `desc`
       # property, where each server is an instance.
-      name: "OCF Matrix Bridge status"
+      name: "OCF Matrix"
 
       # additionalAddresses: [ "irc2.example.com" ]
       #
@@ -138,7 +138,7 @@ ircService:
         #      See https://github.com/matrix-org/matrix-appservice-irc/issues/55
         enabled: true
         # The nickname to give the AS bot.
-        nick: "ocfchan"
+        nick: "matrix-bridge"
         # The password to give to NickServ or IRC Server for this nick. Optional.
         # password: "helloworld"
         #
@@ -168,7 +168,7 @@ ircService:
         # Enable the ability for Matrix users to join *any* channel on this IRC
         # network.
         # Default: false.
-        enabled: false
+        enabled: true
         # Should the AS create a room alias for the new Matrix room? The form of
         # the alias can be modified via 'aliasTemplate'. Default: true.
         createAlias: true
@@ -190,7 +190,7 @@ ircService:
         # Should created Matrix rooms be federated? If false, only users on the
         # HS attached to this AS will be able to interact with this room.
         # Default: true.
-        federate: false
+        federate: true
         # Force this room version when creating IRC channels. Beware if the homeserver doesn't
         # support the room version then the request will fail. By default, no version is requested.
         # roomVersion: "1"
@@ -459,7 +459,7 @@ ircService:
   # for storage in the database. Passwords are stored by using the admin room command
   # `!storepass server.name passw0rd. When a connection is made to IRC on behalf of
   # the Matrix user, this password will be sent as the server password (PASS command).
-  passwordEncryptionKeyPath: "passkey.pem"
+  passwordEncryptionKeyPath: "/data/passkey.pem"
 
   # Config for Matrix -> IRC bridging
   matrixHandler:
@@ -504,5 +504,5 @@ database:
   # Either a PostgreSQL connection string, or a path to the NeDB storage directory.
   # For postgres, it must start with postgres://
   # For NeDB, it must start with nedb://. The path is relative to the project directory.
-  connectionString: "nedb://storage.db"
+  connectionString: "nedb:///data/storage.db"
 
