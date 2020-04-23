@@ -221,7 +221,7 @@ ircService:
         # Syncing membership lists at startup can result in hundreds of members to
         # process all at once. This timer drip feeds membership entries at the
         # specified rate. Default: 10000. (10s)
-        floodDelayMs: 100
+        floodDelayMs: 1000
 
         global:
           ircToMatrix:
