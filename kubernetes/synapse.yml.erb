@@ -6,9 +6,11 @@ spec:
   selector:
     app: matrix
   ports:
-    - port: 80
+    - name: matrix-port
+      port: 80
       targetPort: 8008
-    - port: 9995
+    - name: bridge-port
+      port: 9995
       targetPort: 9995
 ---
 apiVersion: apps/v1
@@ -29,7 +31,8 @@ spec:
     spec:
       containers:
         - name: matrix-synapse
-          image: "docker.ocf.berkeley.edu/synapse:<%= version %>"
+          # TODO: replace with versions
+          image: "docker.ocf.berkeley.edu/synapse:matrix-testing-kmo"
           ports:
             - containerPort: 8008
           volumeMounts:
@@ -39,11 +42,11 @@ spec:
           - name: "SYNAPSE_CONFIG_PATH"
             value: "/etc/matrix/homeserver.yaml"
         - name: matrix-appservice-irc
-          image: "docker.ocf.berkeley.edu/matrix-appservice-irc:latest"
+          image: "docker.ocf.berkeley.edu/matrix-appservice-irc:matrix-appservice-irc-testing-kmo"
           ports:
             - containerPort: 9995
           volumeMounts:
-            - mountPath: /data
+            - mountPath: /db
               name: bridge-vol
       volumes:
         - name: vol

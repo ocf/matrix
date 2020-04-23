@@ -504,5 +504,5 @@ database:
   # Either a PostgreSQL connection string, or a path to the NeDB storage directory.
   # For postgres, it must start with postgres://
   # For NeDB, it must start with nedb://. The path is relative to the project directory.
-  connectionString: "nedb:///data/storage.db"
+  connectionString: "nedb:///db/storage.db"
 
