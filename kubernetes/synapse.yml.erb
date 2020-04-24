@@ -27,19 +27,25 @@ spec:
     spec:
       containers:
         - name: matrix-synapse
-          image: "docker.ocf.berkeley.edu/synapse:<%= version %>"
+          image: "matrixdotorg/synapse:v1.9.1-py3"
           ports:
             - containerPort: 8008
           volumeMounts:
             - mountPath: /data
               name: vol
+            - name: homeserver-config
+              mountPath: /homeserver-config
+              readOnly: true
           env:
           - name: "SYNAPSE_CONFIG_PATH"
-            value: "/etc/matrix/homeserver.yaml"
+            value: "/homeserver-config/homeserver.yaml"
       volumes:
         - name: vol
           persistentVolumeClaim:
             claimName: matrix-vol
+        - name: homeserver-config
+          secret:
+            secretName: synapse-config
         
 ---
 apiVersion: extensions/v1beta1
