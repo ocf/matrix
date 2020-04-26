@@ -52,7 +52,6 @@ metadata:
   labels:
     app: riot
   name: riot-config
-  namespace: matrix
 ---
 apiVersion: v1
 kind: Service
@@ -60,7 +59,6 @@ metadata:
   labels:
     app: riot
   name: riot
-  namespace: matrix
 spec:
   ports:
   - port: 80
@@ -76,7 +74,6 @@ metadata:
   labels:
     app: riot
   name: riot
-  namespace: matrix
 spec:
   replicas: 1
   selector:
@@ -110,7 +107,6 @@ metadata:
   labels:
     app: riot
   name: vhost-ingress
-  namespace: matrix
 spec:
   rules:
     - host: chat.ocf.berkeley.edu
