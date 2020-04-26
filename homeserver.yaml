@@ -830,7 +830,7 @@ turn_uris: [ 'turn:turn.ocf.berkeley.edu:3487?transport=udp' ]
 
 # The shared secret used to compute passwords for the TURN server
 #
-turn_shared_secret: "U2pKbFNwRjU4d016TW9FM0piVzFxZUFXVTk1Nzhta0JlbzgxSGxwMk9jNFpsbnRZVVI0MXR4VkJpcVJ2a1I1RQo="
+turn_shared_secret: "XWUs6wgsHBi7q694WONDdUjccvRBZKDeB6rbutVWbH7ApTbyyseX6uyVH1CsZlTJ"
 
 # The Username and password if the TURN server needs them and
 # does not use a token

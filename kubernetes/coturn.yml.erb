@@ -8,6 +8,7 @@ data:
     denied-peer-ip=10.0.0.0-10.255.255.255
     denied-peer-ip=192.168.0.0-192.168.255.255
     denied-peer-ip=172.16.0.0-172.31.255.255
+    denied-peer-ip=169.229.226.0-169.229.226.255
 
     allowed-peer-ip=$INTERNAL_IP
 
@@ -20,10 +21,10 @@ metadata:
   name: coturn-config
 ---
 apiVersion: v1
-data:
-  # `pwgen -s 64 1 | base64 -w0` to generate
+stringData:
+  # `pwgen -s 64 1` to generate
   # identical to secret in homeserver.yaml
-  auth-secret: U2pKbFNwRjU4d016TW9FM0piVzFxZUFXVTk1Nzhta0JlbzgxSGxwMk9jNFpsbnRZVVI0MXR4VkJpcVJ2a1I1RQo=
+  auth-secret: XWUs6wgsHBi7q694WONDdUjccvRBZKDeB6rbutVWbH7ApTbyyseX6uyVH1CsZlTJ
 kind: Secret
 metadata:
   labels:
@@ -73,7 +74,7 @@ spec:
               apiVersion: v1
               fieldPath: status.hostIP
         - name: EXTERNAL_IP
-          value: 1.2.3.4  # TODO: How to get?
+          value: 169.229.226.79  # lb.ocf.berkeley.edu
         - name: AUTH_SECRET
           valueFrom:
             secretKeyRef:
