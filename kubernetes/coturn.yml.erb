@@ -1,0 +1,104 @@
+---
+apiVersion: v1
+data:
+  # see https://github.com/matrix-org/synapse/blob/master/docs/turn-howto.md#configuration
+  turnserver.conf: |
+    no-tcp-relay
+
+    denied-peer-ip=10.0.0.0-10.255.255.255
+    denied-peer-ip=192.168.0.0-192.168.255.255
+    denied-peer-ip=172.16.0.0-172.31.255.255
+
+    allowed-peer-ip=$INTERNAL_IP
+
+    user-quota=12
+    total-quota=1200
+kind: ConfigMap
+metadata:
+  labels:
+    app: coturn
+  name: coturn-config
+  namespace: matrix
+---
+apiVersion: v1
+data:
+  # `pwgen -s 64 1 | base64 -w0` to generate
+  # identical to secret in homeserver.yaml
+  auth-secret: U2pKbFNwRjU4d016TW9FM0piVzFxZUFXVTk1Nzhta0JlbzgxSGxwMk9jNFpsbnRZVVI0MXR4VkJpcVJ2a1I1RQo=
+kind: Secret
+metadata:
+  labels:
+    app: coturn
+  name: coturn-secret
+  namespace: matrix
+type: Opaque
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: coturn
+  name: coturn
+  namespace: matrix
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  # UDP only, do we need TCP?
+  - name: udp-port
+    port: 3487
+    protocol: UDP
+    targetPort: 3487
+  selector:
+    app: coturn
+  type: LoadBalancer
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: coturn
+  name: coturn
+  namespace: matrix
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: coturn
+  template:
+    metadata:
+      labels:
+        app: coturn
+    spec:
+      containers:
+      - env:
+        - name: INTERNAL_IP
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.hostIP
+        - name: EXTERNAL_IP
+          value: 1.2.3.4  # TODO: How to get?
+        - name: AUTH_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: auth-secret
+              name: coturn-secret
+        - name: PORT
+          value: "3487"
+        - name: REALM
+          value: turn.ocf.berkeley.edu
+        image: "docker.ocf.berkeley.edu/coturn:<%= coturn_version %>"
+        name: coturn
+        readinessProbe:
+          tcpSocket:
+            port: 9090
+        volumeMounts:
+        - mountPath: /etc/coturn/turnserver.conf
+          name: coturn-config
+          subPath: turnserver.conf
+      restartPolicy: Always
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: coturn-config
+        name: coturn-config
