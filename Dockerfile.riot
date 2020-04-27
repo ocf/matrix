@@ -1,0 +1,4 @@
+ARG riot_version=latest
+FROM vectorim/riot-web:${riot_version}
+
+COPY config.riot.json /app/config.json
