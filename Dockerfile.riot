@@ -1,4 +1,10 @@
-ARG riot_version=latest
+ARG riot_version=v1.5.15
 FROM vectorim/riot-web:${riot_version}
 
 COPY config.riot.json /app/config.json
+
+# Custom Branding
+RUN rm -rf /app/themes/riot/
+COPY /branding/themes/riot /app/themes/
+RUN rm -f /app/welcome/images/logo.svg
+COPY /branding/themes/riot/img/logos/riot-im-logo.svg /app/welcome/images/logo.svg
