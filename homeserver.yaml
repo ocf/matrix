@@ -858,7 +858,7 @@ media_store_path: "/data/media_store"
 
 # Enable registration for new users.
 #
-enable_registration: true
+enable_registration: false
 
 # Optional account validity configuration. This allows for accounts to be denied
 # any request after a given period.
@@ -1224,13 +1224,13 @@ saml2_config:
   # so it is not normally necessary to specify them unless you need to
   # override them.
   #
-  #sp_config:
+  sp_config:
   #  # point this to the IdP's metadata. You can use either a local file or
   #  # (preferably) a URL.
-  #  metadata:
+    metadata:
+      remote:
+        - url: https://auth.ocf.berkeley.edu/auth/realms/ocf/protocol/saml/descriptor
   #    #local: ["saml2/idp.xml"]
-  #    remote:
-  #      - url: https://our_idp/metadata.xml
   #
   #    # By default, the user has to go to our login page first. If you'd like
   #    # to allow IdP-initiated login, set 'allow_unsolicited: true' in a
@@ -1345,7 +1345,7 @@ saml2_config:
 password_config:
    # Uncomment to disable password login
    #
-   #enabled: false
+  enabled: false
 
    # Uncomment to disable authentication against the local password
    # database. This is ignored if `enabled` is false, and is only useful
