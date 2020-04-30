@@ -1,4 +1,2 @@
 ARG bridge_version=latest
 FROM matrixdotorg/matrix-appservice-irc:${bridge_version}
-
-# TODO: Deprecate this Dockerfile

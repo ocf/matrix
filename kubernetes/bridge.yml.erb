@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: matrix-appservice-irc
-          image: "docker.ocf.berkeley.edu/matrix-appservice-irc:matrix-testing-kmo"
+          image: "docker.ocf.berkeley.edu/matrix-appservice-irc:<%= version %>"
           ports:
             - containerPort: 9995
           volumeMounts:

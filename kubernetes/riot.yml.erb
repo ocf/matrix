@@ -31,7 +31,7 @@ spec:
         app: riot
     spec:
       containers:
-      - image: "docker.ocf.berkeley.edu/riot:matrix-testing-kmo"
+      - image: "docker.ocf.berkeley.edu/riot:<%= version %>"
         imagePullPolicy: IfNotPresent
         name: riot-web
         readinessProbe:

@@ -29,7 +29,7 @@ spec:
       containers:
         - name: matrix-synapse
           # TODO: replace with versions
-          image: "docker.ocf.berkeley.edu/synapse:matrix-testing-kmo"
+          image: "docker.ocf.berkeley.edu/synapse:<%= version %>"
           ports:
             - containerPort: 8008
           volumeMounts:
