@@ -1,6 +1,4 @@
 ARG bridge_version=latest
 FROM matrixdotorg/matrix-appservice-irc:${bridge_version}
 
-COPY matrix-appservice-irc/config.yaml /data/config.yaml
-COPY matrix-appservice-irc/irc-registration.yaml /data/appservice-registration-irc.yaml
-COPY matrix-appservice-irc/tempkey.pem /data/passkey.pem
+# TODO: Deprecate this Dockerfile

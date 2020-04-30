@@ -32,12 +32,25 @@ spec:
           ports:
             - containerPort: 9995
           volumeMounts:
-            - mountPath: /db
-              name: bridge-vol
+            - name: bridge-vol
+              mountPath: /db
+            - name: matrix-secrets
+              mountPath: /etc/matrix-shared
+              readOnly: true
+            - name: bridge-config
+              mountPath: /data
+              readOnly: true
       volumes:
         - name: bridge-vol
           persistentVolumeClaim:
             claimName: matrix-bridge-vol
+        - name: matrix-secrets
+          hostPath:
+            path: /opt/share/kubernetes/secrets/matrix
+            type: Directory
+        - name: bridge-config
+          secret:
+            secretName: bridge-config
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

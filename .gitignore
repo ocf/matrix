@@ -1,1 +1,3 @@
 *.pem
+ocf-kubernetes-deploy-secret-*.erb
+secret.yaml

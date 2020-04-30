@@ -33,15 +33,34 @@ spec:
           ports:
             - containerPort: 8008
           volumeMounts:
-            - mountPath: /data
-              name: vol
+            - name: vol
+              mountPath: /data
+            - name: synapse-config
+              mountPath: /etc/matrix-synapse
+              readOnly: true
+            - name: bridge-config
+              mountPath: /etc/matrix-bridge
+              readOnly: true
+            - name: matrix-secrets
+              mountPath: /etc/matrix-shared
+              readOnly: true
           env:
             - name: "SYNAPSE_CONFIG_PATH"
-              value: "/etc/matrix/homeserver.yaml"
+              value: "/etc/matrix-synapse/homeserver.yaml"
       volumes:
         - name: vol
           persistentVolumeClaim:
             claimName: matrix-vol
+        - name: synapse-config
+          secret:
+            secretName: synapse-config
+        - name: bridge-config
+          secret:
+            secretName: bridge-config
+        - name: matrix-secrets
+          hostPath:
+            path: /opt/share/kubernetes/secrets/matrix
+            type: Directory
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
