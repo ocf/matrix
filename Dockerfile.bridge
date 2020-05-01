@@ -1,2 +1,6 @@
 ARG bridge_version=latest
 FROM matrixdotorg/matrix-appservice-irc:${bridge_version}
+
+# Unset ENTRYPOINT for easier operability in the image
+ENTRYPOINT []
+CMD ["/app/docker/start.sh"]

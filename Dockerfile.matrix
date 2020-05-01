@@ -1,2 +1,4 @@
 ARG synapse_version=latest
 FROM matrixdotorg/synapse:${synapse_version}
+
+COPY synapse.log.config /etc/matrix/synapse.log.config
