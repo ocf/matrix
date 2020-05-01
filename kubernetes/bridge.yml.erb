@@ -29,6 +29,7 @@ spec:
       containers:
         - name: matrix-appservice-irc
           image: "docker.ocf.berkeley.edu/matrix-appservice-irc:<%= version %>"
+          imagePullPolicy: Always
           ports:
             - containerPort: 9995
           volumeMounts:

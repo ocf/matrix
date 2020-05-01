@@ -29,6 +29,7 @@ spec:
       containers:
         - name: matrix-synapse
           image: "docker.ocf.berkeley.edu/synapse:<%= version %>"
+          imagePullPolicy: Always
           ports:
             - containerPort: 8008
           volumeMounts:
@@ -40,6 +41,9 @@ spec:
             - name: matrix-secrets
               mountPath: /etc/matrix-shared
               readOnly: true
+            - name: bridge-config
+              mountPath: /etc/matrix-bridge
+              readOnly: true
           env:
             - name: "SYNAPSE_CONFIG_PATH"
               value: "/etc/matrix-synapse/homeserver.yaml"
@@ -50,6 +54,9 @@ spec:
         - name: synapse-config
           secret:
             secretName: synapse-config
+        - name: bridge-config
+          secret:
+            secretName: bridge-config
         - name: matrix-secrets
           hostPath:
             path: /opt/share/kubernetes/secrets/matrix
