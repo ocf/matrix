@@ -37,9 +37,6 @@ spec:
             - name: synapse-config
               mountPath: /etc/matrix-synapse
               readOnly: true
-            - name: bridge-config
-              mountPath: /etc/matrix-bridge
-              readOnly: true
             - name: matrix-secrets
               mountPath: /etc/matrix-shared
               readOnly: true
@@ -53,9 +50,6 @@ spec:
         - name: synapse-config
           secret:
             secretName: synapse-config
-        - name: bridge-config
-          secret:
-            secretName: bridge-config
         - name: matrix-secrets
           hostPath:
             path: /opt/share/kubernetes/secrets/matrix
