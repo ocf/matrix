@@ -1,5 +1,5 @@
 servicePipeline(
-    upstreamProjects: ['dockers/master'],
+    upstreamProjects: [],
 )
 
 // vim: ft=groovy

@@ -2,7 +2,7 @@
     "default_server_config": {
         "m.homeserver": {
             "base_url": "https://matrix.ocf.berkeley.edu",
-            "server_name": "matrix.ocf.berkeley.edu"
+            "server_name": "ocf.berkeley.edu"
         },
         "m.identity_server": {
             "base_url": "https://vector.im"
@@ -35,7 +35,7 @@
     "default_theme": "dark",
     "roomDirectory": {
         "servers": [
-            "matrix.ocf.berkeley.edu",
+            "ocf.berkeley.edu",
             "matrix.org"
         ]
     },

@@ -1,18 +1,22 @@
 DOCKER_REVISION ?= matrix-testing-$(USER)
-SYNAPSE_DOCKER_TAG = docker-push.ocf.berkeley.edu/synapse:$(DOCKER_REVISION)
-RIOT_DOCKER_TAG = docker-push.ocf.berkeley.edu/riot:$(DOCKER_REVISION)
-RANDOM_PORT := $(shell expr $$(( 8000 + (`id -u` % 1000) + 2 )))
 
-SYNAPSE_VERSION := v1.9.1-py3
+SYNAPSE_DOCKER_TAG = docker-push.ocf.berkeley.edu/synapse:$(DOCKER_REVISION)
+BRIDGE_DOCKER_TAG = docker-push.ocf.berkeley.edu/matrix-appservice-irc:$(DOCKER_REVISION)
+RIOT_DOCKER_TAG = docker-push.ocf.berkeley.edu/riot:$(DOCKER_REVISION)
+
+SYNAPSE_VERSION := v1.12.4-py3
 RIOT_VERSION := v1.5.15
+BRIDGE_VERSION := release-0.17.0-rc4
 
 .PHONY: cook-image
 cook-image:
-	docker build --build-arg synapse_version=$(SYNAPSE_VERSION) --pull -t $(SYNAPSE_DOCKER_TAG) .
-	docker build -f Dockerfile.riot --build-arg riot_version=$(RIOT_VERSION) --pull -t $(RIOT_DOCKER_TAG) .
+	docker build --build-arg synapse_version=$(SYNAPSE_VERSION) --pull -f Dockerfile.matrix -t $(SYNAPSE_DOCKER_TAG) .
+	docker build --build-arg bridge_version=$(BRIDGE_VERSION) --pull -f Dockerfile.bridge -t $(BRIDGE_DOCKER_TAG) .
+	docker build --build-arg riot_version=$(RIOT_VERSION) --pull -f Dockerfile.riot -t $(RIOT_DOCKER_TAG) .
 
 .PHONY: push-image
 push-image:
 	docker push $(SYNAPSE_DOCKER_TAG)
+	docker push $(BRIDGE_DOCKER_TAG)
 	docker push $(RIOT_DOCKER_TAG)
 

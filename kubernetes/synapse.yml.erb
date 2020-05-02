@@ -6,13 +6,14 @@ spec:
   selector:
     app: matrix
   ports:
-    - port: 80
+    - name: matrix-port
+      port: 80
       targetPort: 8008
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: matrix-deployment
+  name: matrix-synapse
   labels:
     app: matrix
 spec:
@@ -28,19 +29,38 @@ spec:
       containers:
         - name: matrix-synapse
           image: "docker.ocf.berkeley.edu/synapse:<%= version %>"
+          imagePullPolicy: Always
           ports:
             - containerPort: 8008
           volumeMounts:
-            - mountPath: /data
-              name: vol
+            - name: vol
+              mountPath: /data
+            - name: synapse-config
+              mountPath: /etc/matrix-synapse
+              readOnly: true
+            - name: matrix-secrets
+              mountPath: /etc/matrix-shared
+              readOnly: true
+            - name: bridge-config
+              mountPath: /etc/matrix-bridge
+              readOnly: true
           env:
-          - name: "SYNAPSE_CONFIG_PATH"
-            value: "/etc/matrix/homeserver.yaml"
+            - name: "SYNAPSE_CONFIG_PATH"
+              value: "/etc/matrix-synapse/homeserver.yaml"
       volumes:
         - name: vol
           persistentVolumeClaim:
             claimName: matrix-vol
-        
+        - name: synapse-config
+          secret:
+            secretName: synapse-config
+        - name: bridge-config
+          secret:
+            secretName: bridge-config
+        - name: matrix-secrets
+          hostPath:
+            path: /opt/share/kubernetes/secrets/matrix
+            type: Directory
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -66,4 +86,3 @@ spec:
     requests:
       storage: 10Gi
   storageClassName: managed-nfs-storage
-

@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: matrix-bridge-service
+spec:
+  selector:
+    app: matrix-bridge
+  ports:
+    - name: matrix-bridge-port
+      port: 9995
+      targetPort: 9995
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: matrix-bridge
+  labels:
+    app: matrix-bridge
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: matrix-bridge
+  template:
+    metadata:
+      labels:
+        app: matrix-bridge
+    spec:
+      containers:
+        - name: matrix-appservice-irc
+          image: "docker.ocf.berkeley.edu/matrix-appservice-irc:<%= version %>"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9995
+          volumeMounts:
+            - name: matrix-secrets
+              mountPath: /etc/matrix-shared
+              readOnly: true
+            - name: bridge-config
+              mountPath: /data
+              readOnly: true
+      volumes:
+        - name: matrix-secrets
+          hostPath:
+            path: /opt/share/kubernetes/secrets/matrix
+            type: Directory
+        - name: bridge-config
+          secret:
+            secretName: bridge-config
