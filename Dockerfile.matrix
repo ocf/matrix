@@ -2,3 +2,6 @@ ARG synapse_version=latest
 FROM matrixdotorg/synapse:${synapse_version}
 
 COPY synapse.log.config /etc/matrix/synapse.log.config
+COPY s3_storage_provider.py /etc/matrix/s3_storage_provider.py
+
+ENV PYTHONPATH "${PYTHONPATH}:/etc/matrix/s3_storage_provider.py"
