@@ -4,8 +4,13 @@ SYNAPSE_DOCKER_TAG = docker-push.ocf.berkeley.edu/synapse:$(DOCKER_REVISION)
 BRIDGE_DOCKER_TAG = docker-push.ocf.berkeley.edu/matrix-appservice-irc:$(DOCKER_REVISION)
 RIOT_DOCKER_TAG = docker-push.ocf.berkeley.edu/riot:$(DOCKER_REVISION)
 
+# OCF-UPDATE-CHECK relmon=15283
 SYNAPSE_VERSION := v1.17.0-py3
+
+# OCF-UPDATE-CHECK relmon=18626
 RIOT_VERSION := v1.7.1
+
+# OCF-UPDATE-CHECK relmon=121056
 BRIDGE_VERSION := release-0.19.0
 
 .PHONY: cook-image
