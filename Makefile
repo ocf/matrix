@@ -6,7 +6,7 @@ RIOT_DOCKER_TAG = docker-push.ocf.berkeley.edu/riot:$(DOCKER_REVISION)
 
 SYNAPSE_VERSION := v1.19.1
 RIOT_VERSION := v1.7.5
-BRIDGE_VERSION := release-0.20.2
+BRIDGE_VERSION := release-0.20.3
 
 .PHONY: cook-image
 cook-image:
