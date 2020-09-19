@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: discord-bridge-service
+spec:
+  selector:
+    app: discord-bridge
+  ports:
+    - name: discord-bridge-port
+      port: 9005
+      targetPort: 9005
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: discord-bridge
+  labels:
+    app: discord-bridge
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: discord-bridge
+  template:
+    metadata:
+      labels:
+        app: discord-bridge
+    spec:
+      containers:
+        - name: discord-appservice-irc
+          image: "halfshot/matrix-appservice-discord:latest"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9005
+          volumeMounts:
+            - name: discord-config
+              mountPath: /data
+              readOnly: true
+      volumes:
+        - name: discord-config
+          secret:
+            secretName: discord-config

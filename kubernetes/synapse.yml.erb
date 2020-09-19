@@ -44,6 +44,9 @@ spec:
             - name: bridge-config
               mountPath: /etc/matrix-bridge
               readOnly: true
+            - name: discord-config
+              mountPath: /etc/discord-bridge
+              readOnly: true
           env:
             - name: "SYNAPSE_CONFIG_PATH"
               value: "/etc/matrix-synapse/homeserver.yaml"
@@ -57,6 +60,9 @@ spec:
         - name: bridge-config
           secret:
             secretName: bridge-config
+        - name: discord-config
+          secret:
+            secretName: discord-config
         - name: matrix-secrets
           hostPath:
             path: /opt/share/kubernetes/secrets/matrix
