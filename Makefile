@@ -4,7 +4,7 @@ SYNAPSE_DOCKER_TAG = docker-push.ocf.berkeley.edu/synapse:$(DOCKER_REVISION)
 BRIDGE_DOCKER_TAG = docker-push.ocf.berkeley.edu/matrix-appservice-irc:$(DOCKER_REVISION)
 RIOT_DOCKER_TAG = docker-push.ocf.berkeley.edu/riot:$(DOCKER_REVISION)
 
-SYNAPSE_VERSION := v1.20.0
+SYNAPSE_VERSION := v1.20.1
 RIOT_VERSION := v1.7.7
 BRIDGE_VERSION := release-0.20.3
 
