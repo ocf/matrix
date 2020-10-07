@@ -47,6 +47,9 @@ spec:
             - name: discord-config
               mountPath: /etc/discord-bridge
               readOnly: true
+            - name: slack-config
+              mountPath: /etc/slack-bridge
+              readOnly: true
           env:
             - name: "SYNAPSE_CONFIG_PATH"
               value: "/etc/matrix-synapse/homeserver.yaml"
@@ -63,6 +66,9 @@ spec:
         - name: discord-config
           secret:
             secretName: discord-config
+        - name: slack-config
+            secret:
+              secretName: slack-config
         - name: matrix-secrets
           hostPath:
             path: /opt/share/kubernetes/secrets/matrix
