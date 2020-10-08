@@ -7,8 +7,8 @@ spec:
     app: slack-bridge
   ports:
     - name: slack-bridge-port
-      port: 9005
-      targetPort: 9005
+      port: 9805
+      targetPort: 9805
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -28,10 +28,10 @@ spec:
     spec:
       containers:
         - name: slack-appservice-irc
-          image: "halfshot/matrix-appservice-slack:develop"
+          image: "matrixdotorg/matrix-appservice-slack:release-1.6.0"
           imagePullPolicy: Always
           ports:
-            - containerPort: 9005
+            - containerPort: 9805
           volumeMounts:
             - name: slack-config
               mountPath: /data
