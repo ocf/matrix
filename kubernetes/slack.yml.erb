@@ -34,7 +34,7 @@ spec:
             - containerPort: 9805
           volumeMounts:
             - name: slack-config
-              mountPath: /data
+              mountPath: /config
               readOnly: true
       volumes:
         - name: slack-config
