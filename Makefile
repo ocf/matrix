@@ -5,7 +5,7 @@ BRIDGE_DOCKER_TAG = docker-push.ocf.berkeley.edu/matrix-appservice-irc:$(DOCKER_
 RIOT_DOCKER_TAG = docker-push.ocf.berkeley.edu/riot:$(DOCKER_REVISION)
 
 SYNAPSE_VERSION := v1.20.1
-RIOT_VERSION := v1.7.8
+RIOT_VERSION := v1.7.9
 BRIDGE_VERSION := release-0.20.3
 
 .PHONY: cook-image
