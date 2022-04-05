@@ -78,6 +78,8 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: virtual-host-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 80m
 spec:
   rules:
     - host: matrix.ocf.berkeley.edu
