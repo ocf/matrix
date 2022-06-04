@@ -53,6 +53,13 @@ spec:
           env:
             - name: "SYNAPSE_CONFIG_PATH"
               value: "/etc/matrix-synapse/homeserver.yaml"
+          resources:
+            requests:
+              cpu: "2"
+              memory: "4Gi"
+            limits:
+              cpu: "4"
+              memory: "8Gi"
       volumes:
         - name: vol
           persistentVolumeClaim:
