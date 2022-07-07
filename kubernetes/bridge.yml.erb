@@ -7,8 +7,8 @@ spec:
     app: matrix-bridge
   ports:
     - name: matrix-bridge-port
-      port: 9995
-      targetPort: 9995
+      port: 9999
+      targetPort: 9999
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -31,7 +31,7 @@ spec:
           image: "docker.ocf.berkeley.edu/matrix-appservice-irc:<%= version %>"
           imagePullPolicy: Always
           ports:
-            - containerPort: 9995
+            - containerPort: 9999
           volumeMounts:
             - name: matrix-secrets
               mountPath: /etc/matrix-shared
