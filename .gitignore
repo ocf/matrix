@@ -1,3 +1,0 @@
-# Kubernetes deployment secrets
-kubernetes/ocf-kubernetes-deploy-secret-*.erb
-secret.yaml

@@ -1,9 +1,4 @@
-ARG riot_version=latest
-FROM vectorim/element-web:${riot_version}
-
-COPY config.riot.json /app/config.json
-
-# Custom Branding
+FROM docker.io/vectorim/element-web:latest AS element
 RUN rm -rf /app/themes/riot/
 COPY /branding/themes/riot/ /app/themes/riot/
 RUN rm -f /app/welcome/images/logo.svg
